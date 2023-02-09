@@ -48,7 +48,6 @@ class BaseModel:
         """returns a dictionary containing all keys/values of __dict__ of the instance"""
         dict = self.__dict__.copy()
         dict['__class___'] = self.__class__.__name__
-        for k in dict:
-            if type(dict[k]) is datetime:
-                dict[k] = dict[k].isoformat()
+        dict["created_at"] = self.created_at.isoformat()
+        dict["updated_at"] = sel.updated_at.isoformat()
         return dict
