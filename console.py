@@ -144,6 +144,15 @@ class HBNBCommand(cmd.Cmd):
         if re.search(r"\.all\(\)\s*$", line):
             class_name = line[:-6].strip()
             return self.do_all(class_name)
+
+        elif re.search(r"\.show\s*\(", line):
+            class_name, class_id = re.split(r"\.show\(", line)
+            return self.do_show(class_name + " " + class_id[1:-2])
+
+        elif re.search(r"\.destroy\s*\(", line):
+            class_name, class_id = re.split(r"\.destroy\(", line)
+            return self.do_destroy(class_name + " " + class_id[1:-2])
+
         else:
             print("** Unknown syntax:", line)
 
