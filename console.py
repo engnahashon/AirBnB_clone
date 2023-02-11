@@ -152,6 +152,16 @@ class HBNBCommand(cmd.Cmd):
         elif re.search(r"\.destroy\s*\(", line):
             class_name, class_id = re.split(r"\.destroy\(", line)
             return self.do_destroy(class_name + " " + class_id[1:-2])
+        elif re.search(r"\.count\(\)\s*$", line):
+            class_name = line[:-8].strip()
+            count = 0
+            if class_name in models.class_dict.keys():
+                instances = models.storage.all()
+                for obj in instances.values():
+                    if type(obj).__name__ == class_name:
+                        count += 1
+            print(count)
+            return
 
         else:
             print("** Unknown syntax:", line)
