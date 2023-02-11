@@ -2,13 +2,14 @@
 """AirBnB Console"""
 import cmd
 import models
+import re
 
 
 class HBNBCommand(cmd.Cmd):
     """Simple command processor example."""
     prompt = '(hbnb) '
 
-    def empty_line(self):
+    def emptyline(self):
         """an empty line + ENTER shouldn’t execute anything"""
         pass
 
@@ -58,6 +59,8 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, line):
         """Prints all string representation of all instances
     based or not on the class name"""
+        if "all()" in line:
+            print("Found {}".format(line[:-5].strip))
         argv = line.split()
         instances = models.storage.all()
         if len(argv) == 0:
@@ -136,6 +139,13 @@ class HBNBCommand(cmd.Cmd):
                                     loop_dict(line, obj)
             else:
                 print("** class doesn't exist **")
+
+    def default(self, line):
+        if re.search(r"\.all\(\)\s*$", line):
+            class_name = line[:-6].strip()
+            return self.do_all(class_name)
+        else:
+            print("** Unknown syntax:", line)
 
 
 if __name__ == '__main__':
