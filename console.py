@@ -53,5 +53,26 @@ class HBNBCommand(cmd.Cmd):
         except KeyError:
             print("** no instance found **")
 
+    def do_all(self, line):
+        """Prints all string representation of all instances based or not on the class name"""
+        argv = line.split()
+        instances = models.storage.all()
+        if len(argv) == 0:
+            output = []
+            for obj in instances.values():
+                output.append(str(obj))
+            print(output)
+        else:
+            if argv[0] not in models.class_dict.keys():
+                print("** class doesn't exist **")
+                return
+            else:
+                output = []
+                for obj in instances.values():
+                    if type(obj).__name__ == argv[0]:
+                        output.append(str(obj))
+                print(output)
+
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
