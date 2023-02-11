@@ -27,7 +27,7 @@ class BaseModel:
             self.updated_at = datetime.now()
         else:
             for k in kwargs:
-                if k in ['creates_at','updated_at']:
+                if k in ['created_at','updated_at']:
                     setattr(self,k,datetime.fromisoformat(kwargs[k]))
                 elif k!= '__class__':
                     setattr(self,k,kwargs[k])
@@ -39,15 +39,15 @@ class BaseModel:
 
     def save(self):
         """updates the public instance attribute updated_at with the current datetime"""
-        from models import fileStorage
+        """from models import fileStorage"""
         self.updated_at = datetime.now()
-        fileStorage.new(self)
-        fileStorage.save()
+        """storage.new(self)"""
+        """storage.save()"""
 
     def to_dict(self):
         """returns a dictionary containing all keys/values of __dict__ of the instance"""
         dict = self.__dict__.copy()
-        dict['__class___'] = self.__class__.__name__
+        dict['__class__'] = self.__class__.__name__
         dict["created_at"] = self.created_at.isoformat()
-        dict["updated_at"] = sel.updated_at.isoformat()
+        dict["updated_at"] = self.updated_at.isoformat()
         return dict
