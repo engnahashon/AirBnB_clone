@@ -24,15 +24,34 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel"""
         if not argv:
             print("** class name missing **")
-        else:
-            try:
-                new_base = models.class_dict[argv]
-            except KeyError:
-                print("** class doesn't exist **")
+            return
+        try:
+            new_base = models.class_dict[argv]
             new_object = new_base()
             new_object.save()
             print(new_object.id)
+        except KeyError:
+            print("** class doesn't exist **")
+            return
 
+    def do_show(self, line):
+        """Prints the string representation of an instance based on the class name and id"""
+        argv = line.split()
+        if len(argv) == 0:
+            print("** class name missing **")
+            return
+        if argv[0] not in models.class_dict.keys():
+            print("** class doesn't exist **")
+            return
+        if len(argv) < 2:
+            print("** instance id missing **")
+            return
+        try:
+            key = argv[0] + "." + argv[1]
+            obj = models.storage.all()[key]
+            print(obj)
+        except KeyError:
+            print("** no instance found **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
