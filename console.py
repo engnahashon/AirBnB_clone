@@ -13,7 +13,7 @@ class HBNBCommand(cmd.Cmd):
         """an empty line + ENTER shouldn’t execute anything"""
         pass
 
-    def do_quit(self, line):
+    def do_quit(self, line=""):
         """Quit command to exit the program"""
         return True
 
@@ -155,6 +155,7 @@ class HBNBCommand(cmd.Cmd):
         elif re.search(r"\.count\(\)\s*$", line):
             class_name = line[:-8].strip()
             count = 0
+
             if class_name in models.class_dict.keys():
                 instances = models.storage.all()
                 for obj in instances.values():
@@ -162,6 +163,11 @@ class HBNBCommand(cmd.Cmd):
                         count += 1
             print(count)
             return
+                  
+#elif re.search(r"\.update\s*\(", line):
+#           class_name, args = re.split(r"\.update\(", line)
+#           args = re.split(r",", args)
+#           return self.do_update(class_name + " " + args[0][1:-1] + " " + args[1][1:-1] + " " + args[2])
 
         else:
             print("** Unknown syntax:", line)
