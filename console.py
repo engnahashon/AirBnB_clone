@@ -163,11 +163,12 @@ class HBNBCommand(cmd.Cmd):
                         count += 1
             print(count)
             return
-                  
-#elif re.search(r"\.update\s*\(", line):
-#           class_name, args = re.split(r"\.update\(", line)
-#           args = re.split(r",", args)
-#           return self.do_update(class_name + " " + args[0][1:-1] + " " + args[1][1:-1] + " " + args[2])
+
+        elif re.search(r"\.update\s*\(", line):
+            class_name, args = re.split(r"\.update\(", line)
+            args = re.split(r", ", args)
+            return self.do_update(class_name + " " + args[0][1:-1] + " " +
+                                  args[1][1:-1] + " " + args[2][:-1])
 
         else:
             print("** Unknown syntax:", line)
