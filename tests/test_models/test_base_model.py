@@ -7,7 +7,7 @@ from uuid import UUID
 import json
 import os
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'storage',
                  'basemodel test not supported')
 class test_basemodel(unittest.TestCase):
     """ test class for base_model class"""
@@ -107,7 +107,7 @@ class test_basemodel(unittest.TestCase):
             'updated_at': datetime_now.isoformat()
         }
         self.assertDictEqual(mdl.to_dict(), to_dict)
-        if os.getenv('HBNB_TYPE_STORAGE') != 'db':
+        if os.getenv('HBNB_TYPE_STORAGE') != 'storage':
             self.assertDictEqual(
                 self.value(id='u-b34', age=13).to_dict(),
                 {
